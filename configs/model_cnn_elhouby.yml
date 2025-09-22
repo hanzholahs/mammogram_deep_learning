@@ -1,0 +1,51 @@
+model_args:
+  name: "cnn_baseline"
+  input_shape: [256, 256, 1]
+  layers:
+    - Conv2D:
+        filters: 16
+        kernel_size: [5, 5]
+        strides: [1, 1]
+        padding: "valid"
+        activation: "relu"
+    - MaxPool2D:
+        pool_size: [2, 2]
+        strides: [2, 2]
+
+    - Conv2D:
+        filters: 16
+        kernel_size: [5, 5]
+        strides: [1, 1]
+        padding: "valid"
+        activation: "relu"
+    - MaxPool2D:
+        pool_size: [2, 2]
+        strides: [2, 2]
+
+    - Conv2D:
+        filters: 14
+        kernel_size: [3, 3]
+        strides: [1, 1]
+        padding: "same"
+        activation: "relu"
+    - MaxPool2D:
+        pool_size: [2, 2]
+        strides: [2, 2]
+    - MaxPool2D:
+        pool_size: [2, 2]
+        strides: [2, 2]
+
+    - Flatten: {}
+    
+    - Dense:
+        units: 512
+        activation: "relu"
+    - Dense:
+        units: 256
+        activation: "relu"
+    - Dense:
+        units: 128
+        activation: "relu"
+    - Dense:
+        units: 1
+        activation: "sigmoid"

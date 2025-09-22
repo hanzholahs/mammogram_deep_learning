@@ -1,0 +1,25 @@
+image_resize: 256   # for model training
+random_seed : 123
+
+dirs:
+  raw_images        : ../data/images/raw
+  processed_images  : ../data/images/processed
+  augmented_images  : ../data/images/augmented
+  data_split        : ../data/splits
+  model_logs        : ../models/logs
+  model_ckpts       : ../models/ckpts
+  model_initial     : ../models/initial
+  model_final       : ../models/final
+
+cbisddsm:
+  raw_dir: "D:/Data/cbis-ddsm/CBIS-DDSM"
+  description_files:
+    - "D:/Data/cbis-ddsm/calc_case_description_test_set.csv"
+    - "D:/Data/cbis-ddsm/calc_case_description_train_set.csv"
+    - "D:/Data/cbis-ddsm/mass_case_description_test_set.csv"
+    - "D:/Data/cbis-ddsm/mass_case_description_train_set.csv"
+
+split_size:
+  train : 0.64
+  val   : 0.16
+  test  : 0.20

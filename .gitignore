@@ -1,0 +1,25 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Tooling Caches
+.mypy_cache
+.pytest_cache
+.ruff_cache
+
+# Image Data
+data/
+
+# Model checkpoint
+models/initial/
+
+# Ignored files
+.ignore/
+notebooks/dev/

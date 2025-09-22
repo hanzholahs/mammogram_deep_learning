@@ -1,0 +1,34 @@
+base_model_args:
+  input_shape: [256, 256, 3]
+  include_top: False
+  weights: "imagenet"
+
+model_args:
+  name: ensemble_multi
+  input_shape: [256, 256, 3]
+  branch_layers:
+    # TRANSITION FOR EACH BACKBONE
+    - GlobalAveragePooling2D: {}
+    # HEAD: DENSE BLOCK FOR EACH BACKBONE
+    - Dense:
+        units: 512
+        activation: "relu"
+        kernel_regularizer:
+          L2: 0.01
+    - BatchNormalization: {}
+    - Dropout:
+        rate: 0.25
+  head_layers:
+    # HEAD: DENSE BLOCK AFTER CONCATENATION
+    - Dense:
+        units: 1024
+        activation: "relu"
+        kernel_regularizer:
+          L2: 0.01
+    - BatchNormalization: {}
+    - Dropout:
+        rate: 0.25
+    # HEAD: OUTPUT LAYER
+    - Dense:
+        units: 1
+        activation: "sigmoid"
