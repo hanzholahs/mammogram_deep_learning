@@ -15,11 +15,10 @@ wheels/
 .ruff_cache
 
 # Image Data
-data/
+./data/
 
 # Model checkpoint
 models/initial/
 
 # Ignored files
-.ignore/
 notebooks/dev/
