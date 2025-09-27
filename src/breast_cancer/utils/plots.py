@@ -1,11 +1,6 @@
-import os
-from typing import List
 import math
 import matplotlib.pyplot as plt
-from numpy.typing import NDArray
-from PIL import Image
 from tensorflow.data import Dataset
-from tqdm import tqdm
 
 
 def plot_image_samples(
@@ -15,6 +10,7 @@ def plot_image_samples(
     ncols: int = 4,
     figsize: tuple[int, int] = (12, 8),
 ):
+    """Plot random images given a tf dataset"""
     n_images = nrows * ncols
     img_batch, lbl_batch = next(iter(ds))
 
@@ -33,6 +29,7 @@ def plot_image_samples(
     plt.show()
 
 def plot_history(history):
+    """Plot training history of a model"""
     hist = history.history if hasattr(history, "history") else history
     epochs = range(1, len(hist["loss"]) + 1)
 

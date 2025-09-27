@@ -1,16 +1,28 @@
+from typing import Any, Dict
+
 import tensorflow as tf
 from tensorflow.keras import Model
-from tensorflow.keras.layers import Input, Concatenate
+from tensorflow.keras.layers import Concatenate, Input
 
 from breast_cancer.models.build_layers import build_layers
 from breast_cancer.utils.configs import LAYERS, VOTE_METHODS
 
 
-def build_ensemble_shared_backbone(backbone, cfg, backbone_trainable=False):
-    """Build a Keras model from a dictionary config with a backbone.
+def build_ensemble_shared_backbone(
+    backbone: tf.keras.Model,
+    cfg: Dict[str, Any],
+    backbone_trainable: bool = False,
+) -> Model:
+    """Build a shared-backbone ensemble with N classifier heads and a voting layer.
 
-    Voting by default layers expect (n_batches, n_classifiers) of probabilities
-       apply tf.sigmoid before voting if using logits
+    Args:
+        backbone: Keras backbone model applied once to inputs.
+        cfg: Configuration dict (e.g., input_shape, n_classifiers, layers, transition, vote_method).
+        backbone_trainable: Whether to keep backbone weights trainable.
+    Returns:
+        Model: Compiled Keras model producing a single probabilistic output.
+    
+    [AI-assisted] This docstring and some other documentation-related tasks generated with assistance from generative AI and reviewed by a human.
     """
     # Read config specifications
     n_classifiers = int(cfg.get("n_classifiers", 3))
@@ -55,11 +67,23 @@ def build_ensemble_shared_backbone(backbone, cfg, backbone_trainable=False):
 
 
 def build_ensemble_dual_backbone(
-    backbone_a,
-    backbone_b,
-    cfg,
-    backbone_trainable=False,
-):
+    backbone_a: tf.keras.Model,
+    backbone_b: tf.keras.Model,
+    cfg: Dict[str, Any],
+    backbone_trainable: bool = False,
+) -> Model:
+    """Build a dual-backbone model that fuses two branches before head layers.
+    
+    Args:
+        backbone_a: First backbone model.
+        backbone_b: Second backbone model.
+        cfg: Configuration dict (e.g., input_shape, branch_layers, head_layers).
+        backbone_trainable: Whether to keep backbone weights trainable.
+    Returns:
+        Model: Keras model with concatenated branches and a common head.
+    
+    [AI-assisted] This docstring and some other documentation-related tasks generated with assistance from generative AI and reviewed by a human.
+    """
     # Read config specifications
     input_shape = cfg.get("input_shape")
     branch_layers = cfg.get("branch_layers", [])
@@ -95,12 +119,22 @@ def build_ensemble_dual_backbone(
     return Model(inputs=inputs, outputs=outputs, **model_args)
 
 
-
 def build_ensemble_multi_backbone(
-    *backbones,
-    cfg,
-    backbone_trainable=False,
-):
+    *backbones: tf.keras.Model,
+    cfg: Dict[str, Any],
+    backbone_trainable: bool = False,
+) -> Model:
+    """Build a multi-backbone ensemble that concatenates branch outputs into a head.
+    
+    Args:
+        *backbones: One or more backbone models.
+        cfg: Configuration dict (e.g., input_shape, branch_layers, head_layers).
+        backbone_trainable: Whether to keep backbone weights trainable.
+    Returns:
+        Model: Keras model combining multiple backbones into a unified head.
+    
+    [AI-assisted] This docstring and some other documentation-related tasks generated with assistance from generative AI and reviewed by a human.
+    """
     # Read config specifications
     input_shape = cfg.get("input_shape")
     branch_layers = cfg.get("branch_layers", [])

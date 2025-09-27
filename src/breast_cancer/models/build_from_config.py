@@ -1,10 +1,21 @@
+from typing import Any, Dict
+
 from tensorflow.keras import Model
 from tensorflow.keras.layers import Input
 
 from breast_cancer.models.build_layers import build_layers
 
 
-def build_from_config(cfg):
+def build_from_config(cfg: Dict[str, Any]):
+    """Build a Keras model from a config with only user-defined layers.
+    
+    Args:
+        cfg: Configuration dict (must include input_shape and layers).
+    Returns:
+        Model: Keras model built from config layers.
+    
+    [AI-assisted] This docstring and some other documentation-related tasks generated with assistance from generative AI and reviewed by a human.
+    """
     # Read config specifications
     input_shape = cfg.get("input_shape")
     layers_cfg = cfg.get("layers", [])
